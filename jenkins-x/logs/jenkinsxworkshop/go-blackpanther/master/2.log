@@ -1,0 +1,153 @@
+Step: build-step-credential-initializer:
+
+{"level":"warn","ts":1549912120.7130728,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1549912120.7190113,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+Step: build-step-git-source-0:
+
+{"level":"warn","ts":1549912122.8778436,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1549912123.11859,"logger":"fallback-logger","caller":"git-init/main.go:92","msg":"Successfully cloned \"https://github.com/jenkinsxworkshop/go-blackpanther.git\" @ \"ce063dc89c3a2544131896eaef9380558392f763\" in path \"/workspace\""}
+Step: build-step-jenkins:
+
+Picked up _JAVA_OPTIONS: -Xmx400m
+Started
+Running in Durability level: PERFORMANCE_OPTIMIZED
+  19.028 [id=33]	WARNING	i.f.k.c.i.VersionUsageUtils#alert: The client is using resource type 'customresourcedefinitions' with unstable version 'v1beta1'
+[Pipeline] node
+Running on Jenkins in /tmp/jenkinsTests.tmp/jenkins4219739155059115018test/workspace/job
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withCredentials
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (CI Build and push snapshot)
+Stage "CI Build and push snapshot" skipped due to when conditional
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Release)
+[Pipeline] dir
+Running in /home/jenkins/go/src/github.com/jenkinsxworkshop/go-blackpanther
+[Pipeline] {
+[Pipeline] git
+Cloning the remote Git repository
+Cloning repository https://github.com/jenkinsxworkshop/go-blackpanther.git
+ > git init /home/jenkins/go/src/github.com/jenkinsxworkshop/go-blackpanther # timeout=10
+Fetching upstream changes from https://github.com/jenkinsxworkshop/go-blackpanther.git
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/jenkinsxworkshop/go-blackpanther.git +refs/heads/*:refs/remotes/origin/*
+ > git config remote.origin.url https://github.com/jenkinsxworkshop/go-blackpanther.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/jenkinsxworkshop/go-blackpanther.git # timeout=10
+Fetching upstream changes from https://github.com/jenkinsxworkshop/go-blackpanther.git
+ > git fetch --tags --progress https://github.com/jenkinsxworkshop/go-blackpanther.git +refs/heads/*:refs/remotes/origin/*
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/master^{commit} # timeout=10
+Checking out Revision ce063dc89c3a2544131896eaef9380558392f763 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f ce063dc89c3a2544131896eaef9380558392f763
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b master ce063dc89c3a2544131896eaef9380558392f763
+Commit message: "Merge pull request #1 from jenkinsxworkshop/workshop"
+First time build. Skipping changelog.
+[Pipeline] sh
++ jx-release-version
++ echo 0.0.2
+[Pipeline] sh
++ cat VERSION
++ jx step tag --version 0.0.2
+Tag v0.0.2 created and pushed to remote origin
+[Pipeline] sh
++ make build
+CGO_ENABLED=0 GO15VENDOREXPERIMENT=1 go build -ldflags '' -o bin/go-blackpanther main.go
+[Pipeline] sh
++ cat VERSION
++ export VERSION=0.0.2
++ skaffold build -f skaffold.yaml
+time="2019-02-11T19:11:31Z" level=warning msg="config version (skaffold/v1beta2) out of date: upgrading to latest (skaffold/v1beta3)"
+Starting build...
+Building [changeme]...
+Sending build context to Docker daemon  525.8kBSending build context to Docker daemon  6.502MB
+Step 1/4 : FROM scratch
+ ---> 
+Step 2/4 : EXPOSE 8080
+ ---> Running in 21230332f0cd
+ ---> 21d0c0d7a3a2
+Step 3/4 : ENTRYPOINT /go-blackpanther
+ ---> Running in 8880027cde73
+ ---> 99b191f1659f
+Step 4/4 : COPY ./bin/ /
+ ---> 85d52c9c5221
+Successfully built 85d52c9c5221
+The push refers to a repository [10.3.247.93:5000/jenkinsxworkshop/go-blackpanther]
+b5639a74edc5: Preparing
+b5639a74edc5: Pushed
+0.0.2: digest: sha256:ae93e66f9fcb59b89b8d42c3974cc85f6400b274e221f3018f93880b18d58b51 size: 528
+Build complete in 1.551705246s
+Starting test...
+Test complete in 4.703µs
+changeme -> 10.3.247.93:5000/jenkinsxworkshop/go-blackpanther:0.0.2
+There is a new version (0.22.0) of skaffold available. Download it at https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+
+[Pipeline] sh
++ cat VERSION
++ jx step post build --image 10.3.247.93:5000/jenkinsxworkshop/go-blackpanther:0.0.2
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Promote to Environments)
+[Pipeline] dir
+Running in /home/jenkins/go/src/github.com/jenkinsxworkshop/go-blackpanther/charts/go-blackpanther
+[Pipeline] {
+[Pipeline] sh
++ cat ../../VERSION
++ jx step changelog --version v0.0.2
+Using batch mode as inside a pipeline
+Generating change log from git ref ce063dc89c3a2544131896eaef9380558392f763 => fd5737fef6209690ef492a7e325c81c13b2bcdf5
+Failed to enrich commits with issues: User.jenkins.io "" is invalid: metadata.name: Required value: name or generateName is required
+Failed to enrich commits with issues: User.jenkins.io "" is invalid: metadata.name: Required value: name or generateName is required
+Finding issues in commit messages using git format
+No release found for jenkinsxworkshop/go-blackpanther and tag v0.0.2 so creating a new release
+Updated the release information at https://github.com/jenkinsxworkshop/go-blackpanther/releases/tag/v0.0.2
+generated: /home/jenkins/go/src/github.com/jenkinsxworkshop/go-blackpanther/charts/go-blackpanther/templates/release.yaml
+Created Release go-blackpanther-0-0-2 resource in namespace jx
+Updating PipelineActivity jenkinsxworkshop-go-blackpanther-master-2 with version 0.0.2
+Updated PipelineActivities jenkinsxworkshop-go-blackpanther-master-2 with release notes URL: https://github.com/jenkinsxworkshop/go-blackpanther/releases/tag/v0.0.2
+[Pipeline] sh
++ jx step helm release
+No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Adding missing Helm repo: jenkins-x http://chartmuseum.jenkins-x.io
+Successfully added Helm repository jenkins-x.
+Adding missing Helm repo: releases http://jenkins-x-chartmuseum:8080
+Successfully added Helm repository releases.
+No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Uploading chart file go-blackpanther-0.0.2.tgz to http://jenkins-x-chartmuseum:8080/api/charts
+Received 201 response: {"saved":true}
+[Pipeline] sh
++ cat ../../VERSION
++ jx promote -b --all-auto --timeout 1h --version 0.0.2
+prow based install so skip waiting for the merge of Pull Requests to go green as currently there is an issue with gettingstatuses from the PR, see https://github.com/jenkins-x/jx/issues/2410
+Promoting app go-blackpanther version 0.0.2 to namespace jx-staging
+Created Pull Request: https://github.com/jenkinsxworkshop/environment-rockies-staging/pull/2
+
+Pull Request https://github.com/jenkinsxworkshop/environment-rockies-staging/pull/2 is merged at sha 65235e7f50c801dba314a35ba4c4251c3a9aa537
+Pull Request merged but we are not waiting for the update pipeline to complete!
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
